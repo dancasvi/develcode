@@ -1,0 +1,22 @@
+.container {
+    border: 1px solid black;
+    border-left: none;
+    border-radius: 0 10px 10px 0;
+    display: flex;
+    width: 80%;
+    position: fixed;
+    z-index: 2;
+    overflow-y: hidden;
+}
+
+.sucesso {
+    background-color: #2bef2b;
+}
+
+.erro {
+    background-color: rgb(255, 19, 19);
+}
+
+.warning {
+    background-color: rgb(233, 233, 38);
+}

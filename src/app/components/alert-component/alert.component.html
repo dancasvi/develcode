@@ -1,0 +1,6 @@
+<div class="container" [ngClass]="{ 'sucesso': msgTipo === 1, 'erro' : msgTipo === 2, 'warning' : msgTipo === 3 }">
+    <div class="msg-box">
+        <h4>{{ msgTipoString }}</h4>
+        <p>{{ msg }}</p>
+    </div>
+</div>

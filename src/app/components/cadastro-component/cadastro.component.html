@@ -1,0 +1,98 @@
+<div class="loading" *ngIf="isLoading">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/7/7d/Pedro_luis_romani_ruiz.gif">
+</div>
+
+<div *ngIf="exibirMsg" [@showMsg]>
+    <app-alert [msg]="msg" [msgTipo]="msgTipo"></app-alert>
+</div>
+
+<div class="container">
+    <h3>Cadastro de Usuário</h3>
+
+    <form [formGroup]="formulario">
+        <div class="row">
+            <div class="col-sm-12 col-md-4 col-lg-4 espaco-entre-campos">
+                <label><span class="obrigatorio">*</span>Código</label>
+                <input type="number" formControlName="codigo" pInputText [readonly]="isCodigoReadonly"
+                (focusout)="verificarPreenchimento('codigo')"
+                (keydown)="verificarDecimalOuNegativo($event)"/><br/>
+                <small *ngIf="exibirMsgCodigoObrigatorio" class="msg-obrigatorio">Código é obrigatório</small>
+            </div>
+
+            <div class="col-sm-12 col-md-4 col-lg-4 espaco-entre-campos">
+                <label><span class="obrigatorio">*</span>Nome</label><br/>
+                <input type="text" formControlName="nome" pInputText (focusout)="verificarPreenchimento('nome')"/><br/>
+                <small *ngIf="exibirMsgNomeObrigatorio" class="msg-obrigatorio">Nome é obrigatório</small>
+            </div>
+
+            <div class="col-sm-12 col-md-4 col-lg-4 espaco-entre-campos">
+                <label><span class="obrigatorio">*</span>Data de Nascimento</label>
+                <input type="date" formControlName="dtNascimento" pInputText (focusout)="verificarPreenchimento('dtNascimento')"/><br/>
+                <small *ngIf="exibirMsgDtNascObrigatorio" class="msg-obrigatorio">Data de Nascimento é obrigatório</small>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- <div class="col-sm-12 col-md-4 col-lg-4 espaco-entre-campos"> -->
+            <div class="col-12 espaco-entre-campos">
+                <input id="input-file" type="file" class="file-upload" (change)="addFoto($event)">
+            </div>
+        </div>
+
+        <div class="botoes">
+            <div>
+                <button id="btnCadastrar" type="button" (click)="cadastrar()">Cadastrar</button>
+            </div>
+
+            <div>
+                <button id="btnListar" type="button" (click)="listarUsuarios()">Listar</button>
+            </div>
+        </div>
+
+        <div class="botoes">
+            <div>
+                <button id="btnAtualizar" type="button" (click)="atualizar()" [disabled]="isAtualizarDisabled">Atualizar</button>
+            </div>
+
+            <div>
+                <button id="btnLimpar" type="button" (click)="limpar()">Limpar</button>
+            </div>
+            <!-- <div>
+                <button type="button" (click)="testar()">Testar</button>
+            </div> -->
+        </div>
+    </form>
+
+    <hr>
+
+    <h3>Lista de Usuários</h3>
+
+    <table>
+        <tr>
+          <th>Código</th>
+          <th>Nome</th>
+          <th>Data de Nascimento</th>
+          <th>Ações</th>
+        </tr>
+
+        <ng-container *ngIf="listaDeUsuarios.length > 0; else tabelaVazia">
+            <tr *ngFor="let usuario of listaDeUsuarios">
+                <td>{{ usuario.codigo }}</td>
+                <td>{{ usuario.nome }}</td>
+                <td>{{ usuario.dtNascimento | date:'dd/MM/yyyy' }}</td>
+                <td>                    
+                    <img class="icone" (click)="editarUsuario(usuario.codigo)"
+                    src="https://cdn.pixabay.com/photo/2014/10/09/13/14/magnifying-glass-481818_1280.png">
+                    <img class="icone" (click)="removerUsuario(usuario.codigo)"
+                    src="https://freesvg.org/img/trash.png">
+                </td>
+            </tr>
+        </ng-container>
+        <ng-template #tabelaVazia>
+            <tr>
+                <td  colspan="4">Nenhum registro encontrado.</td>
+            </tr>
+        </ng-template>
+        
+    </table>
+</div>
